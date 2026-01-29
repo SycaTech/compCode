@@ -21,30 +21,36 @@ public class DrivetrainTeleop extends OpMode {
 
     @Override
     public void init() {
-        drive = new DrivetrainBase(hardwareMap);
         driverController = new GamepadEx(gamepad1);
+        drive = new DrivetrainBase(hardwareMap);
     }
 
     @Override
     public void loop() {
-        FieldCentricMecanum();
+        drive.mecanum.driveFieldCentric(
+                driverController.getLeftX(),
+                driverController.getLeftY(),
+                driverController.getRightX(),
+                drive.imu.getRobotYawPitchRollAngles().getYaw()
+        );
         drive.loop(telemetry);
+        telemetry.update();
     }
 
     public Command FieldCentricMecanum() {
         return new InstantCommand(() -> drive.mecanum.driveFieldCentric(
-                driverController.getLeftX(),
+                -driverController.getLeftX(),
                 driverController.getLeftY(),
-                driverController.getRightX(),
-                drive.imu.getRotation2d().getDegrees()
+                -driverController.getRightX(),
+                drive.imu.getRobotYawPitchRollAngles().getYaw()
         ));
     }
 
     public Command RobotCentricMecanum() {
         return new InstantCommand(() -> drive.mecanum.driveRobotCentric(
-                driverController.getLeftX(),
+                -driverController.getLeftX(),
                 driverController.getLeftY(),
-                driverController.getRightX()
+                -driverController.getRightX()
         ));
     }
 }
