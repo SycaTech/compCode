@@ -25,8 +25,8 @@ import org.firstinspires.ftc.teamcode.extentions.Constants;
 import java.util.concurrent.Callable;
 
 public class Shooter extends SubsystemBase{
-    private Motor master;
-    private Motor slave;
+    public Motor master;
+    public Motor slave;
    public PIDFController pidf;
 
 
