@@ -30,6 +30,9 @@ public class DrivetrainBase extends SubsystemBase {
         backLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
+        frontLeft.setInverted(true);
+        Left.setInverted(true);
+
         imu = hwMap.get(Rev9AxisImu.class, "imu");
         imu.resetYaw();
 
