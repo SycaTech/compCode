@@ -17,8 +17,7 @@ public class Constants {
     }
 
     public static class shoot{
-        public
-        static final double TICKS_PER_REVOLUTION = 103.6;
+        public static final double TICKS_PER_REVOLUTION = 103.6;
         public static  double KP = 0.2;
         public static double KI = 0.05;
         public static  double KD = 0;

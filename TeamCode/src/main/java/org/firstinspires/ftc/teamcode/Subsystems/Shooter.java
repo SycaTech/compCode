@@ -1,32 +1,21 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
-
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static org.firstinspires.ftc.teamcode.extentions.Constants.shoot.KD;
 import static org.firstinspires.ftc.teamcode.extentions.Constants.shoot.KI;
 import static org.firstinspires.ftc.teamcode.extentions.Constants.shoot.KP;
-import static org.firstinspires.ftc.teamcode.extentions.Constants.shoot.MAX_INTEGRAL;
-import static org.firstinspires.ftc.teamcode.extentions.Constants.shoot.MAX_POWER;
 import static org.firstinspires.ftc.teamcode.extentions.Constants.shoot.TICKS_PER_REVOLUTION;
 import static org.firstinspires.ftc.teamcode.extentions.Constants.shoot.integral;
 import static org.firstinspires.ftc.teamcode.extentions.Constants.shoot.previousError;
 import static org.firstinspires.ftc.teamcode.extentions.Constants.shoot.targetVelocity;
-
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.controller.PController;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.extentions.Constants;
-
-import java.util.concurrent.Callable;
-
 public class Shooter extends SubsystemBase{
     public Motor master;
-    public Motor slave;
+    public
+    Motor slave;
    public PIDFController pidf;
 
 
