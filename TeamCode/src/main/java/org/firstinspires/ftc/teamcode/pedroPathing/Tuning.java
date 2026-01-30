@@ -15,7 +15,6 @@ import com.bylazar.field.PanelsField;
 import com.bylazar.field.Style;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
-import com.pedropathing.ErrorCalculator;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.*;
 import com.pedropathing.math.*;
@@ -74,10 +73,10 @@ public class Tuning extends SelectableOpMode{
     @Override
     public void onSelect() {
         if (follower == null) {
-            follower = Constants.createFollower(hardwareMap);
+            follower = PedroConstants.createFollower(hardwareMap);
             PanelsConfigurables.INSTANCE.refreshClass(this);
         } else {
-            follower = Constants.createFollower(hardwareMap);
+            follower = PedroConstants.createFollower(hardwareMap);
         }
 
         follower.setStartingPose(new Pose());

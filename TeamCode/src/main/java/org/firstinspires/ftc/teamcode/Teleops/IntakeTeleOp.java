@@ -15,24 +15,24 @@ import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 @TeleOp(name = "intake")
 public class IntakeTeleOp extends CommandOpMode {
 
-    private Intake intakeSubsystem = new Intake();
     private GamepadEx gamepadEx;
-    private Motor motor;
+    private Intake intake;
 
     @Override
     public void initialize() {
         gamepadEx = new GamepadEx(gamepad1);
+        intake = new Intake(telemetry, hardwareMap);
+
+        gamepadEx.getGamepadButton(GamepadKeys.Button.A).whenPressed(intake.Power(1.0));
+        gamepadEx.getGamepadButton(GamepadKeys.Button.B).whenPressed(intake.Power(-1.0));
+        gamepadEx.getGamepadButton(GamepadKeys.Button.Y).whenPressed(intake.Power(0));
+
+
+
     }
 
-    Button intakeGO = new GamepadButton(
-            gamepadEx, GamepadKeys.Button.Y
-    );
-    GamepadButton grabButton = new GamepadButton(
-            gamepadEx, GamepadKeys.Button.A
-    );
-
-    GamepadButton Outtake = new GamepadButton(
-            gamepadEx, GamepadKeys.Button.B
-    );
-
 }
+
+
+
+

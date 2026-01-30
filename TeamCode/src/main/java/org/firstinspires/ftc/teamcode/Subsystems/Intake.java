@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -12,30 +13,31 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 public class Intake extends SubsystemBase {
     private Telemetry telemetry;
-    private HardwareMap hardwareMap;
+
+    private DcMotorEx intake;
+
 
     public Intake(Telemetry telemetry, HardwareMap hwMap) {
         this.telemetry = telemetry;
-        this.hardwareMap = hwMap;
-        intake = hwMap.get(Motor.class, "intake");
+        intake = hwMap.get(DcMotorEx.class, "intake");
+        telemetry.update();
     }
 
-    public Motor intake;
 
     final double TICKS_PER_REVOLUTION = 103.6;
 
     @Override
     public void periodic() {
-        double velocityTPSL = intake.getRate();
+        double velocityTPSL = intake.getVelocity();
         double velocityRPML = (velocityTPSL / TICKS_PER_REVOLUTION) * 60.0;
 
-        telemetry.addData("power", intake.get());
-        telemetry.update();
+        telemetry.addData("power", intake.getPower());
 
     }
 
     public void setPower(double power) {
-        intake.set(power);
+        intake.setPower(power);
+
     }
 
     public Command Power(double VOLT) {
