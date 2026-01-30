@@ -1,4 +1,13 @@
 package org.firstinspires.ftc.teamcode.Teleops;
 
-public class test {
+import com.arcrobotics.ftclib.command.CommandOpMode;
+
+public class test extends CommandOpMode {
+
+    @Override
+    public void initialize() {
+
+
+    }
+
 }
