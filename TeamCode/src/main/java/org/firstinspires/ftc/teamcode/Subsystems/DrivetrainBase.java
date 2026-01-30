@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
@@ -22,10 +23,13 @@ public class DrivetrainBase extends SubsystemBase {
     private final Motor frontRight;
     private final Motor backLeft;
     private final Motor backRight;
+
     public GamepadEx driverController;
+
     public Rev9AxisImu imu;
-    public MecanumDrive mecanum;
     public PIDController pid = new PIDController(Constants.Mecanum.kP, Constants.Mecanum.kI, Constants.Mecanum.kD);
+
+    public MecanumDrive mecanum;
     Telemetry telemetry;
 
     public DrivetrainBase(HardwareMap hwMap, Telemetry telemetry, GamepadEx driverController) {
@@ -42,27 +46,12 @@ public class DrivetrainBase extends SubsystemBase {
         frontLeft.setInverted(true);
         backLeft.setInverted(true);
 
-        imu = hwMap.get(Rev9AxisImu.class, "imu");
+        imu = hwMap.get(Rev9AxisImu.class, Constants.Mecanum.imuName);
         imu.resetYaw();
 
         mecanum = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
         this.telemetry = telemetry;
         this.driverController = driverController;
-    }
-
-    @Override
-    public void periodic() {
-        telemetry.addData("yaw", imu.getRobotYawPitchRollAngles().getYaw());
-
-        telemetry.addData("front Left", frontLeft.getRate());
-        telemetry.addData("front Right", frontRight.getRate());
-        telemetry.addData("back Left", backLeft.getRate());
-        telemetry.addData("back Right", backRight.getRate());
-
-        frontLeft.set(pid.calculate(frontLeft.getRate(), 0));
-        frontRight.set(pid.calculate(frontLeft.getRate(), 0));
-        backLeft.set(pid.calculate(frontLeft.getRate(), 0));
-        backRight.set(pid.calculate(frontLeft.getRate(), 0));
     }
 
     public Command FieldCentricMecanum() {
