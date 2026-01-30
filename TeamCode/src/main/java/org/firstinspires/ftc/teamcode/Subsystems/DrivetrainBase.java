@@ -46,7 +46,7 @@ public class DrivetrainBase extends SubsystemBase {
         frontLeft.setInverted(true);
         backLeft.setInverted(true);
 
-        imu = hwMap.get(Rev9AxisImu.class, "imu");
+        imu = hwMap.get(Rev9AxisImu.class, Constants.Mecanum.imuName);
         imu.resetYaw();
 
         mecanum = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);

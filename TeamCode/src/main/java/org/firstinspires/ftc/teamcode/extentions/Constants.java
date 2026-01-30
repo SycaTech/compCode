@@ -11,6 +11,8 @@ public class Constants {
         public static final String backLeftName = "BL";
         public static final String backRightName = "BR";
 
+        public static final String imuName = "imu";
+
         public static final double kP = 0.01;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
