@@ -28,6 +28,6 @@ public class DrivetrainTeleop extends CommandOpMode {
 
     @Override
     public void run(){
-        drive.setDefaultCommand(drive.FieldCentricMecanum());
+        drive.setDefaultCommand(drive.FieldCentricMecanum(driverController.getLeftX(), driverController.getRightX(), driverController.getLeftY()));
     }
 }
