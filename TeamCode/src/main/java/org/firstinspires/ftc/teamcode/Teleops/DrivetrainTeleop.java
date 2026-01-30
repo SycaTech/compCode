@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Teleops;
 
 import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ScheduleCommand;
@@ -15,19 +16,18 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainBase;
 
 @TeleOp(name = "drive")
-public class DrivetrainTeleop extends OpMode {
+public class DrivetrainTeleop extends CommandOpMode {
     private GamepadEx driverController;
     private DrivetrainBase drive;
 
     @Override
-    public void init() {
+    public void initialize() {
         driverController = new GamepadEx(gamepad1);
         drive = new DrivetrainBase(hardwareMap, telemetry, driverController);
     }
 
     @Override
-    public void loop() {
-        CommandScheduler.getInstance().setDefaultCommand(drive, drive.FieldCentricMecanum());
-        telemetry.update();
+    public void run(){
+        drive.setDefaultCommand(drive.FieldCentricMecanum(driverController.getLeftX(), driverController.getRightX(), driverController.getLeftY()));
     }
 }
