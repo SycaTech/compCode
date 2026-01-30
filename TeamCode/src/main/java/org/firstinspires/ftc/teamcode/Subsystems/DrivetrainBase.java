@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
@@ -12,6 +13,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.extentions.Constants;
+
+import java.util.function.DoubleSupplier;
 
 public class DrivetrainBase extends SubsystemBase {
     private final Motor frontLeft;
@@ -46,12 +49,13 @@ public class DrivetrainBase extends SubsystemBase {
         this.telemetry = telemetry;
     }
 
-    public Command FieldCentricMecanum(double x, double y, double rX) {
-        return new InstantCommand(() -> mecanum.driveFieldCentric(
-                x,
-                y,
-                rX,
-                imu.getRobotYawPitchRollAngles().getYaw()
+    public Command FieldCentricMecanum(DoubleSupplier x, DoubleSupplier y, DoubleSupplier rX) {
+        return new RunCommand(
+                () -> mecanum.driveFieldCentric(
+                    x.getAsDouble(),
+                    y.getAsDouble(),
+                    rX.getAsDouble(),
+                    imu.getRobotYawPitchRollAngles().getYaw()
         ));
     }
 
