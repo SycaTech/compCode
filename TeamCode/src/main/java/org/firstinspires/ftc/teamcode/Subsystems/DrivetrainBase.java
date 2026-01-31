@@ -6,7 +6,6 @@ import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.rev.Rev9AxisImu;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -28,7 +27,7 @@ public class DrivetrainBase extends SubsystemBase {
     public MecanumDrive mecanum;
     Telemetry telemetry;
 
-    public DrivetrainBase(HardwareMap hwMap, Telemetry telemetry, GamepadEx driverController) {
+    public DrivetrainBase(HardwareMap hwMap, Telemetry telemetry) {
         frontLeft = new Motor(hwMap, Constants.Mecanum.frontLeftName, Motor.GoBILDA.RPM_435);
         frontRight = new Motor (hwMap, Constants.Mecanum.frontRightName, Motor.GoBILDA.RPM_435);
         backLeft = new Motor(hwMap, Constants.Mecanum.backLeftName, Motor.GoBILDA.RPM_435);
@@ -56,14 +55,14 @@ public class DrivetrainBase extends SubsystemBase {
                     y.getAsDouble(),
                     rX.getAsDouble(),
                     imu.getRobotYawPitchRollAngles().getYaw()
-        ));
+        ), this);
     }
 
-    public Command RobotCentricMecanum(double x, double y, double rX) {
+    public Command RobotCentricMecanum(DoubleSupplier x, DoubleSupplier y, DoubleSupplier rX) {
         return new InstantCommand(() -> mecanum.driveRobotCentric(
-                x,
-                y,
-                rX
+                x.getAsDouble(),
+                y.getAsDouble(),
+                rX.getAsDouble()
         ));
     }
 }
