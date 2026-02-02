@@ -59,10 +59,10 @@ public class DrivetrainBase extends SubsystemBase {
     }
 
     public Command RobotCentricMecanum(DoubleSupplier x, DoubleSupplier y, DoubleSupplier rX) {
-        return new InstantCommand(() -> mecanum.driveRobotCentric(
+        return new RunCommand(() -> mecanum.driveRobotCentric(
                 x.getAsDouble(),
                 y.getAsDouble(),
                 rX.getAsDouble()
-        ));
+        ), this);
     }
 }

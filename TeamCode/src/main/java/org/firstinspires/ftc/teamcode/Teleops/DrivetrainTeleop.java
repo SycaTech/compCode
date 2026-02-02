@@ -20,14 +20,10 @@ public class DrivetrainTeleop extends CommandOpMode {
     public void initialize() {
         driverController = new GamepadEx(gamepad1);
         drive = new DrivetrainBase(hardwareMap, telemetry);
-        drive.setDefaultCommand(drive.FieldCentricMecanum(
-                () -> driverController.getLeftY(),
-                () -> driverController.getLeftX(),
-                () -> driverController.getRightX()
-        ));
     }
 
     @Override
     public void run(){
+
     }
 }
