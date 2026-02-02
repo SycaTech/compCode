@@ -11,6 +11,7 @@ import com.qualcomm.hardware.rev.Rev9AxisImu;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.extentions.Constants;
 
 import java.util.function.DoubleSupplier;
@@ -48,21 +49,35 @@ public class DrivetrainBase extends SubsystemBase {
         this.telemetry = telemetry;
     }
 
-    public Command FieldCentricMecanum(DoubleSupplier x, DoubleSupplier y, DoubleSupplier rX) {
+    public Command driveFieldCentric(DoubleSupplier y, DoubleSupplier x, DoubleSupplier rx) {
         return new RunCommand(
                 () -> mecanum.driveFieldCentric(
-                    x.getAsDouble(),
-                    y.getAsDouble(),
-                    rX.getAsDouble(),
-                    imu.getRobotYawPitchRollAngles().getYaw()
-        ), this);
+                        x.getAsDouble(),
+                        y.getAsDouble(),
+                        rx.getAsDouble(),
+                        imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES)
+                ), this
+        );
+
     }
 
+<<<<<<< HEAD
     public Command RobotCentricMecanum(DoubleSupplier x, DoubleSupplier y, DoubleSupplier rX) {
         return new RunCommand(() -> mecanum.driveRobotCentric(
                 x.getAsDouble(),
                 y.getAsDouble(),
                 rX.getAsDouble()
         ), this);
+=======
+    public Command driveRobotCentric(DoubleSupplier y, DoubleSupplier x, DoubleSupplier rx) {
+        return new RunCommand(
+                () -> mecanum.driveRobotCentric(
+                        x.getAsDouble(),
+                        y.getAsDouble(),
+                        rx.getAsDouble()
+
+                ), this
+        );
+>>>>>>> 19ebd57519ca7904508dbac8c3faf1cd0c069503
     }
 }
