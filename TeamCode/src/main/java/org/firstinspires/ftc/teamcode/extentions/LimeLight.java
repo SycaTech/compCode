@@ -1,51 +1,38 @@
 package org.firstinspires.ftc.teamcode.extentions;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-@TeleOp(name = "limeLight test")
-public class LimeLight extends CommandOpMode {
-    private Limelight3A limelight;
-    private double distance;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+public class LimeLight extends SubsystemBase {
+    public Limelight3A limelight;
+    private static double distance;
+
     private int tagID;
-    private LLResult llResult;
+    public LLResult llResult;
 
-    @Override
-    public void initialize() {
+    private HardwareMap hardwareMap;
+    private Telemetry telemetry;
+
+    public LimeLight(HardwareMap hwMap, Telemetry telemetry) {
+        this.hardwareMap = hwMap;
+        this.telemetry = telemetry;
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(0); //Scanning April tags
         limelight.start();
-        llResult = limelight.getLatestResult();
-        if (llResult != null && llResult.isValid()) {
-            if (!llResult.getFiducialResults().isEmpty()) {
-
-                tagID = llResult.getFiducialResults().get(0).getFiducialId();
-
-                telemetry.addData("tag ID", tagID);
-                telemetry.update();
-            }
-        }
     }
 
-
-    @Override
     public void run() {
-        llResult = limelight.getLatestResult();
-        if (llResult != null && llResult.isValid()) {
-            if (!llResult.getFiducialResults().isEmpty()) {
-                distance = getDistanceFromTage(llResult.getTa());
 
-                telemetry.addData("tag ID", tagID);
-                telemetry.addData("distance", distance);
-                telemetry.update();
-            }
-        }
     }
 
-    private static final double K = 1.748501249;
+    private static final double K = 1.756760881;
 
     public double getDistanceFromTage(double ta) {
         ta = Math.max(ta, 0.01);

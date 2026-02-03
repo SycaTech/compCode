@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.command.Command;
-import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
@@ -22,6 +21,8 @@ public class DrivetrainBase extends SubsystemBase {
     private final Motor backLeft;
     private final Motor backRight;
 
+    public HardwareMap hardwareMap;
+
     public Rev9AxisImu imu;
     public PIDController pid = new PIDController(Constants.Mecanum.kP, Constants.Mecanum.kI, Constants.Mecanum.kD);
 
@@ -29,10 +30,13 @@ public class DrivetrainBase extends SubsystemBase {
     Telemetry telemetry;
 
     public DrivetrainBase(HardwareMap hwMap, Telemetry telemetry) {
-        frontLeft = new Motor(hwMap, Constants.Mecanum.frontLeftName, Motor.GoBILDA.RPM_435);
-        frontRight = new Motor (hwMap, Constants.Mecanum.frontRightName, Motor.GoBILDA.RPM_435);
-        backLeft = new Motor(hwMap, Constants.Mecanum.backLeftName, Motor.GoBILDA.RPM_435);
-        backRight = new Motor(hwMap, Constants.Mecanum.backRightName, Motor.GoBILDA.RPM_435);
+        this.telemetry = telemetry;
+        this.hardwareMap = hwMap;
+        
+        frontLeft = hardwareMap.get(Motor.class, "FL");
+        frontRight = hardwareMap.get(Motor.class, "FR");
+        backLeft= hardwareMap.get(Motor.class, "BL");
+        backRight = hardwareMap.get(Motor.class, "BR");
 
         frontLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
@@ -46,10 +50,9 @@ public class DrivetrainBase extends SubsystemBase {
         imu.resetYaw();
 
         mecanum = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
-        this.telemetry = telemetry;
     }
 
-    public Command driveFieldCentric(DoubleSupplier y, DoubleSupplier x, DoubleSupplier rx) {
+    public Command FieldCentricMecanum(DoubleSupplier y, DoubleSupplier x, DoubleSupplier rx) {
         return new RunCommand(
                 () -> mecanum.driveFieldCentric(
                         x.getAsDouble(),
@@ -58,26 +61,13 @@ public class DrivetrainBase extends SubsystemBase {
                         imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES)
                 ), this
         );
-
     }
 
-<<<<<<< HEAD
     public Command RobotCentricMecanum(DoubleSupplier x, DoubleSupplier y, DoubleSupplier rX) {
         return new RunCommand(() -> mecanum.driveRobotCentric(
                 x.getAsDouble(),
                 y.getAsDouble(),
                 rX.getAsDouble()
         ), this);
-=======
-    public Command driveRobotCentric(DoubleSupplier y, DoubleSupplier x, DoubleSupplier rx) {
-        return new RunCommand(
-                () -> mecanum.driveRobotCentric(
-                        x.getAsDouble(),
-                        y.getAsDouble(),
-                        rx.getAsDouble()
-
-                ), this
-        );
->>>>>>> 19ebd57519ca7904508dbac8c3faf1cd0c069503
     }
 }
