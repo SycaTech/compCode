@@ -21,11 +21,7 @@ public class ShooterTelop extends CommandOpMode {
     public void initialize() {
         GamepadEx gamepadEx = new GamepadEx(gamepad1);
         shooterr = new Shooter(hardwareMap);
-        gamepadEx.getGamepadButton(GamepadKeys.Button.A).whenPressed()
+
     }
-
-        GamepadButton sh = new GamepadButton(gamepad1, GamepadKeys.Button.A);
-
-
 }
-}
+

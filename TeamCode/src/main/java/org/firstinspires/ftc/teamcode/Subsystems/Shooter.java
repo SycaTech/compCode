@@ -8,10 +8,17 @@ import org.firstinspires.ftc.teamcode.extentions.Constants;
 public class Shooter extends SubsystemBase {
     public Motor master;
     public Motor slave;
-    PIDFController pidf = new PIDFController(Constants.shoot.kP, Constants.shoot.kI, Constants.shoot.kD,0);
+
+    PIDFController pidf = new PIDFController
+            (Constants.shoot.kP,
+            Constants.shoot.kI,
+            Constants.shoot.kD,
+            0);
+
     public Shooter(HardwareMap hardwareMap) {
         master = new Motor(hardwareMap, "master");
         slave = new Motor(hardwareMap, "slave");
+
         master.resetEncoder();
         slave.resetEncoder();
     }
@@ -21,16 +28,15 @@ public class Shooter extends SubsystemBase {
         double output = pidf.calculate(
                 master.getCurrentPosition()
         );
-        PController pController = new PController(Constants.shoot.kP, Constants.shoot.kI , Constants.shoot.kD);
-        pController.setSetPoint(1400);
-        master.setTargetPosition(1400);
-        slave.setTargetPosition(1400);
+
         Constants.shoot.telemetry.addData("Master RPM", getMasterRPM());
         Constants.shoot.telemetry.addData("Slave RPM", getMasterRPM());
     }
+
     public double getMasterRPM() {
     master.getCorrectedVelocity();
         return ( Constants.shoot.targetVelocity/ Constants.shoot.TICKS_PER_REVOLUTION) * 60.0;
+
     }
 
     public double getSlaveRPM(){
