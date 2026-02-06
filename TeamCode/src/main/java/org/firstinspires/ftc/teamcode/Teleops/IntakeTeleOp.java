@@ -23,8 +23,7 @@ public class IntakeTeleOp extends CommandOpMode {
         gamepadEx = new GamepadEx(gamepad1);
         intake = new Intake(telemetry, hardwareMap);
 
-        gamepadEx.getGamepadButton(GamepadKeys.Button.A).whenPressed(intake.Power(1.0));
-        gamepadEx.getGamepadButton(GamepadKeys.Button.B).whenPressed(intake.Power(-1.0));
+
         gamepadEx.getGamepadButton(GamepadKeys.Button.A).toggleWhenActive(intake.Power(0.7));
 
         gamepadEx.getGamepadButton(GamepadKeys.Button.Y).whenPressed(intake.Power(0));
