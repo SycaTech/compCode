@@ -32,16 +32,21 @@ public class DrivetrainBase extends SubsystemBase {
     public DrivetrainBase(HardwareMap hwMap, Telemetry telemetry) {
         this.telemetry = telemetry;
         this.hardwareMap = hwMap;
-        
-        frontLeft = hardwareMap.get(Motor.class, "FL");
-        frontRight = hardwareMap.get(Motor.class, "FR");
-        backLeft= hardwareMap.get(Motor.class, "BL");
-        backRight = hardwareMap.get(Motor.class, "BR");
+
+        frontLeft = new Motor(this.hardwareMap, Constants.Mecanum.frontLeftName);
+        frontRight = new Motor(this.hardwareMap, Constants.Mecanum.frontRightName);
+        backLeft= new Motor(this.hardwareMap, Constants.Mecanum.backLeftName);
+        backRight = new Motor(this.hardwareMap, Constants.Mecanum.backRightName);
 
         frontLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        frontLeft.setRunMode(Motor.RunMode.RawPower);
+        frontRight.setRunMode(Motor.RunMode.RawPower);
+        backLeft.setRunMode(Motor.RunMode.RawPower);
+        backRight.setRunMode(Motor.RunMode.RawPower);
 
         frontLeft.setInverted(true);
         backLeft.setInverted(true);
@@ -69,5 +74,26 @@ public class DrivetrainBase extends SubsystemBase {
                 y.getAsDouble(),
                 rX.getAsDouble()
         ), this);
+    }
+
+    @Override
+    public void periodic() {
+        pid.calculate(
+                frontLeft.getCurrentPosition(), pid.getSetPoint()
+        );
+
+        pid.calculate(
+                frontRight.getCurrentPosition(), pid.getSetPoint()
+        );
+
+        pid.calculate(
+                backLeft.getCurrentPosition(), pid.getSetPoint()
+        );
+
+        pid.calculate(
+                backRight.getCurrentPosition(), pid.getSetPoint()
+        );
+
+        telemetry.addData("yaw", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
     }
 }

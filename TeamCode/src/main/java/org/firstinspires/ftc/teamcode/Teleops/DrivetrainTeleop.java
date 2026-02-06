@@ -7,7 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainBase;
 
 @TeleOp(name = "drive")
-public class DrivetrainTeleop extends CommandOpMode {
+public class
+DrivetrainTeleop extends CommandOpMode {
     private GamepadEx driverController;
     private DrivetrainBase drive;
 
@@ -23,5 +24,11 @@ public class DrivetrainTeleop extends CommandOpMode {
                     () -> driverController.getLeftX(),
                     () -> driverController.getRightX())
         );
+    }
+
+    @Override
+    public void run() {
+        super.run();
+        telemetry.update();
     }
 }

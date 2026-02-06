@@ -24,7 +24,7 @@ public class LimeLightTeleop extends CommandOpMode {
         LIMELIGHT = new LimeLight(hardwareMap, telemetry);
         limelight = LIMELIGHT.limelight;
 
-        AIM = new AimAtPose();
+//        AIM = new AimAtPose();
     }
 
     @Override
