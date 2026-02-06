@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.extentions;
+package org.firstinspires.ftc.teamcode.Extentions;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.RunCommand;
@@ -8,6 +8,7 @@ import com.arcrobotics.ftclib.util.InterpLUT;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.extentions.LimeLight;
 
 public class AimAtPose extends SubsystemBase {
     private InterpLUT lut;
