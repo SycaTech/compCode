@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -16,14 +17,10 @@ public class Intake extends SubsystemBase {
 
     private DcMotorEx intake;
 
-
     public Intake(Telemetry telemetry, HardwareMap hwMap) {
         this.telemetry = telemetry;
         intake = hwMap.get(DcMotorEx.class, "intake");
-        telemetry.update();
     }
-
-
     final double TICKS_PER_REVOLUTION = 103.6;
 
     @Override
