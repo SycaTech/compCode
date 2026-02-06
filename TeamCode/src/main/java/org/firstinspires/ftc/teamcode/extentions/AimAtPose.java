@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Extentions;
+package org.firstinspires.ftc.teamcode.extentions;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.RunCommand;
