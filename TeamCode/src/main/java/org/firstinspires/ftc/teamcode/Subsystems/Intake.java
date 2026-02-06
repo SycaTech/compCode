@@ -20,6 +20,8 @@ public class Intake extends SubsystemBase {
     public Intake(Telemetry telemetry, HardwareMap hwMap) {
         this.telemetry = telemetry;
         intake = hwMap.get(DcMotorEx.class, "intake");
+
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     final double TICKS_PER_REVOLUTION = 103.6;
 
