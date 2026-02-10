@@ -21,14 +21,13 @@ public class IntakeTeleOp extends CommandOpMode {
     @Override
     public void initialize() {
         gamepadEx = new GamepadEx(gamepad1);
-        intake = new Intake(telemetry, hardwareMap);
+        intake = new Intake( hardwareMap , telemetry);
 
-
-        gamepadEx.getGamepadButton(GamepadKeys.Button.A).whenPressed(intake.Power(0.7));
+        gamepadEx.getGamepadButton(GamepadKeys.Button.A).whenPressed(intake.Power(0.3));
 
         gamepadEx.getGamepadButton(GamepadKeys.Button.Y).whenPressed(intake.Power(0));
 
-        gamepadEx.getGamepadButton(GamepadKeys.Button.B).whenPressed(intake.Power(-0.7));
+        gamepadEx.getGamepadButton(GamepadKeys.Button.B).whenPressed(intake.Power(-0.3));
 
 
 

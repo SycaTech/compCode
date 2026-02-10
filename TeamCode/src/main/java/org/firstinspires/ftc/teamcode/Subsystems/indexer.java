@@ -5,7 +5,8 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class indexer extends SubsystemBase {
+public class
+indexer extends SubsystemBase {
     private Motor motor;
 
     public indexer(HardwareMap hMap) {
