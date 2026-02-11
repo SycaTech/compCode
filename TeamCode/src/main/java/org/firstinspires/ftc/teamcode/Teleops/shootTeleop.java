@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.shoot;
 
-@TeleOp(name = "shooterTeleop")
+@TeleOp(name = "shootTeleop")
 public class shootTeleop extends CommandOpMode {
 
     private shoot shooter;
