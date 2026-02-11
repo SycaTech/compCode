@@ -30,7 +30,6 @@ public class Constants {
         public static  double MAX_POWER = 1.0;
         public Motor master;
         public Motor slave;
-        public static Telemetry telemetry;
         public static double targetVelocity = 0.0;
 
 

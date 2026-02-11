@@ -1,47 +1,54 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
+import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.controller.PController;
 import com.arcrobotics.ftclib.controller.PIDFController;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.extentions.Constants;
+
 public class Shooter extends SubsystemBase {
-    public Motor master;
-    public Motor slave;
+    public DcMotorEx master;
+    public DcMotorEx slave;
+    public double target = 0;
+    private double output;
+
+
+    public Telemetry telemetry;
 
     PIDFController pidf = new PIDFController
             (Constants.shoot.kP,
-            Constants.shoot.kI,
-            Constants.shoot.kD,
-            0);
+                    Constants.shoot.kI,
+                    Constants.shoot.kD,
+                    0);
 
-    public Shooter(HardwareMap hardwareMap) {
-        master = new Motor(hardwareMap, "master");
-        slave = new Motor(hardwareMap, "slave");
+    public Shooter(HardwareMap hwMap, Telemetry telemetry) {
+        this.telemetry = telemetry;
+        master = hwMap.get(DcMotorEx.class, "Master");
+        slave = hwMap.get(DcMotorEx.class, "Slave");
+        master.setDirection(DcMotorSimple.Direction.FORWARD);
+        slave.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        master.resetEncoder();
-        slave.resetEncoder();
+        pidf.setTolerance(3);
     }
 
     @Override
     public void periodic() {
-        double output = pidf.calculate(
-                master.getCurrentPosition()
+        pidf.calculate(
+                master.getCurrentPosition(),
+                slave.getCurrentPosition()
         );
 
-        Constants.shoot.telemetry.addData("Master RPM", getMasterRPM());
-        Constants.shoot.telemetry.addData("Slave RPM", getMasterRPM());
+        telemetry.addData("masterRPM" , master.getVelocity());
+        telemetry.addData("slaveRPM" , slave.getVelocity());
     }
 
-    public double getMasterRPM() {
-    master.getCorrectedVelocity();
-        return ( Constants.shoot.targetVelocity/ Constants.shoot.TICKS_PER_REVOLUTION) * 60.0;
-
-    }
-
-    public double getSlaveRPM(){
-        slave.getCorrectedVelocity();
-        return (Constants.shoot.targetVelocity/ Constants.shoot.TICKS_PER_REVOLUTION) *60;
-
+    public Command setShootRPM(double vel) {
+        return new InstantCommand(() -> {
+            master.setVelocity(vel);
+            slave.setVelocity(vel);
+        }, this);
     }
 }
