@@ -14,28 +14,22 @@ import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 @TeleOp(name = "intake")
 public class IntakeTeleOp extends  CommandOpMode {
 
-    private GamepadEx gamepadEx;
+    private GamepadEx conroller;
     private Intake intake;
 
     @Override
     public void initialize() {
-        gamepadEx = new GamepadEx(gamepad1);
-        intake = new Intake(telemetry, hardwareMap);
+        conroller = new GamepadEx(gamepad1);
+        intake = new Intake(hardwareMap, telemetry);
 
-
-        gamepadEx.getGamepadButton(GamepadKeys.Button.A).whenPressed(intake.Power(0.2));
-
-        gamepadEx.getGamepadButton(GamepadKeys.Button.Y).whenPressed(intake.Power(0));
-
-        gamepadEx.getGamepadButton(GamepadKeys.Button.B).whenPressed(intake.Power(-0.2));
-
-
-
+        conroller.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whileActiveContinuous(intake.Power(-0.7));
+        conroller.getGamepadButton(GamepadKeys.Button.DPAD_UP).whileActiveContinuous(intake.Power(0.7));
+        conroller.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT).whileActiveContinuous(intake.Power(0));
     }
 
     @Override
     public void run(){
         super.run();
         telemetry.update();
-    }
+        }
     }

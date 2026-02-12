@@ -13,7 +13,8 @@ public class Shooter extends SubsystemBase {
     public DcMotorEx master;
     public DcMotorEx slave;
     public double target = 0;
-    private double output;
+    public double P;
+
 
 
     public Telemetry telemetry;
@@ -36,19 +37,27 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        pidf.calculate(
-                master.getCurrentPosition(),
-                slave.getCurrentPosition()
-        );
 
-        telemetry.addData("masterRPM" , master.getVelocity());
-        telemetry.addData("slaveRPM" , slave.getVelocity());
+        telemetry.addData("masterRPM" , P);
+        telemetry.addData("slaveRPM" , P);
+        telemetry.addData("target" , target);
     }
 
-    public Command setShootRPM(double vel) {
+    public Command power(double vel){
         return new InstantCommand(() -> {
-            master.setVelocity(vel);
-            slave.setVelocity(vel);
-        }, this);
-    }
+            double P = pidf.calculate(
+                    master.getCurrentPosition(),
+                    slave.getCurrentPosition()
+            );
+            this.P = vel;
+            this.target = vel;
+            master.setPower(vel);
+            slave.setPower(vel);
+        }
+        );}
 }
+
+
+
+
+
