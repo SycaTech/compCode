@@ -26,7 +26,6 @@ public class IndexTeleop extends CommandOpMode {
     @Override
     public void run() {
         super.run();
-        telemetry.update();
     }
 
 

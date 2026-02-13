@@ -37,7 +37,7 @@ public class AimAtPose extends SubsystemBase {
 
     public double getDistanceFromTage(double ta) {
         ta = Math.max(ta, 0.01);
-        return (K / Math.sqrt(ta)) * 100 + 3;
+        return (K / Math.sqrt(ta)) * 100 + 16;
     }
 
     public Command calculateRPM() {

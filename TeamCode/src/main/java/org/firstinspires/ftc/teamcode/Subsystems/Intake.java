@@ -15,31 +15,39 @@ import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 public class Intake extends SubsystemBase {
     private Telemetry telemetry;
 
-    private DcMotorEx intake;
+    private Motor intake;
+    private Motor index;
 
     public Intake(Telemetry telemetry, HardwareMap hwMap) {
         this.telemetry = telemetry;
-        intake = hwMap.get(DcMotorEx.class, "intake");
-
-        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intake = new Motor(hwMap, "intake");
+        index = new Motor(hwMap, "index");
     }
     final double TICKS_PER_REVOLUTION = 103.6;
 
     @Override
     public void periodic() {
-        double velocityTPSL = intake.getVelocity();
+        double velocityTPSL = intake.getRate();
         double velocityRPML = (velocityTPSL / TICKS_PER_REVOLUTION) * 60.0;
 
-        telemetry.addData("power", intake.getPower());
+        telemetry.addData("power intake", intake.get());
+        telemetry.addData("power index", index.get());
 
     }
 
-    public void setPower(double power) {
-        intake.setPower(power);
-
+    public void setIntake(double power) {
+        intake.set(power);
     }
 
-    public Command Power(double VOLT) {
-        return new InstantCommand(() -> setPower(VOLT));
+    public void setIndex(double power) {
+        index.set(power);
+    }
+
+    public Command PowerIntake(double VOLT) {
+        return new InstantCommand(() -> setIntake(VOLT));
+    }
+
+    public Command PowerIndex(double VOLT) {
+        return new InstantCommand(() -> setIndex(VOLT));
     }
 }

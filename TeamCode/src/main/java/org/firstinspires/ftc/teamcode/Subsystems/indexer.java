@@ -10,7 +10,7 @@ indexer extends SubsystemBase {
     private Motor motor;
 
     public indexer(HardwareMap hMap) {
-        motor = new Motor(hMap, "indexer");
+        motor = new Motor(hMap, "index");
 
         motor.stopAndResetEncoder();
 

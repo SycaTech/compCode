@@ -41,10 +41,13 @@ public class AimAtPoseTeleop extends CommandOpMode {
         super.run();
         llResult = LIMELIGHT.limelight.getLatestResult();
         distance = LIMELIGHT.getDistanceFromTage(llResult.getTa());
+        telemetry.addData("Distance", distance);
+        telemetry.addData("RPM needed", RPM_Needed);
         telemetry.update();
     }
 
     public void calculateRPM() {
+        distance = LIMELIGHT.getDistanceFromTage(llResult.getTa());
         RPM_Needed = aim.getRPM(distance);
     }
 
