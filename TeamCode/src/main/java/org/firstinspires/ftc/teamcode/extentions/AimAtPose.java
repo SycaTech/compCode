@@ -43,12 +43,12 @@ public class AimAtPose extends SubsystemBase {
         getRPM(this.distance);
         telemetry.addData("distance", distance);
         telemetry.addData("tag ID", tagID);
-        telemetry.addData("RPM Needed", neededRPM);
         telemetry.update();
     }
 
     public void getRPM(double distance) {
         neededRPM =  lut.get(distance);
+        telemetry.addData("RPM Needed", neededRPM);
     }
 
     private static final double K = 1.756760881;

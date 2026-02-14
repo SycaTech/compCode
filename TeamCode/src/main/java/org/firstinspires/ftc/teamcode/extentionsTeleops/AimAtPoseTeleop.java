@@ -30,7 +30,7 @@ public class AimAtPoseTeleop extends CommandOpMode {
         shooter = new Shooter(hardwareMap, telemetry);
         operator = new GamepadEx(gamepad1);
 
-        operator.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(shooter.power(aim.neededRPM));
+        operator.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(shooter.power(aim.neededRPM));
         operator.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(shooter.power(0));
     }
 }
