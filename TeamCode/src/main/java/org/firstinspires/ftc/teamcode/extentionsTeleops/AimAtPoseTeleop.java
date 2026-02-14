@@ -17,7 +17,6 @@ import org.firstinspires.ftc.teamcode.extentions.LimeLight;
 public class AimAtPoseTeleop extends CommandOpMode {
     private AimAtPose aim;
 
-    private LimeLight LIMELIGHT;
     private LLResult llResult;
 
     private int tagID;
@@ -31,29 +30,7 @@ public class AimAtPoseTeleop extends CommandOpMode {
     public void initialize() {
         aim = new AimAtPose(hardwareMap, telemetry);
         operator = new GamepadEx(gamepad1);
-        LIMELIGHT = new LimeLight(hardwareMap, telemetry);
 
-        operator.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(aimAtPose());
-    }
-
-    @Override
-    public void run() {
-        super.run();
-        llResult = LIMELIGHT.limelight.getLatestResult();
-        distance = LIMELIGHT.getDistanceFromTage(llResult.getTa());
-        telemetry.addData("Distance", distance);
-        telemetry.addData("RPM needed", RPM_Needed);
-        telemetry.update();
-    }
-
-    public void calculateRPM() {
-        distance = LIMELIGHT.getDistanceFromTage(llResult.getTa());
-        RPM_Needed = aim.getRPM(distance);
-    }
-
-    public Command aimAtPose() {
-        return new InstantCommand(
-                this::calculateRPM
-        );
+        operator.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(aim.calculateRPM());
     }
 }
