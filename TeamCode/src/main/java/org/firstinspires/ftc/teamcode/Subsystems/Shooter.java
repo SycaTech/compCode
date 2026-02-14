@@ -1,4 +1,6 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
+import static org.firstinspires.ftc.teamcode.extentions.Constants.shoot.TICKS_PER_REVOLUTION;
+
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.RunCommand;
@@ -13,7 +15,6 @@ import org.firstinspires.ftc.teamcode.extentions.Constants;
 public class Shooter extends SubsystemBase {
     public DcMotorEx master;
     public DcMotorEx slave;
-    public double target = 0;
     public double P;
 
 
@@ -42,16 +43,23 @@ public class Shooter extends SubsystemBase {
                 master.getCurrentPosition(),
                 slave.getCurrentPosition()
         );
-        telemetry.addData("masterRPM" , master.getVelocity());
-        telemetry.addData("slaveRPM" , slave.getVelocity());
-        telemetry.addData("target" , target);
+        telemetry.addData("masterRPM" , getmasterRPM());
+        telemetry.addData("slaveRPM" , getslaveRPM());
     }
+
 
     public void Power(double power){
         this.P = power;
         master.setVelocity(power);
         slave.setVelocity(power);
     }
+    public double getmasterRPM() {
+        return (master.getVelocity() / TICKS_PER_REVOLUTION) * 60.0;
+    }
+    public double getslaveRPM() {
+        return (slave.getVelocity() / TICKS_PER_REVOLUTION) * 60;
+    }
+
 
     public Command power(double vel) {
         return new RunCommand(() -> Power(vel), this);

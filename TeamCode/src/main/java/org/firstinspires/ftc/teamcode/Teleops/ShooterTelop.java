@@ -14,7 +14,7 @@ public class ShooterTelop extends CommandOpMode {
     public void initialize() {
         shoot = new GamepadEx(gamepad1);
         shooter = new Shooter(hardwareMap , telemetry);
-        shoot.getGamepadButton(GamepadKeys.Button.A).whenPressed(shooter.power(1400));
+        shoot.getGamepadButton(GamepadKeys.Button.A).whenPressed(shooter.power(2350));
         shoot.getGamepadButton(GamepadKeys.Button.B).whenPressed(shooter.power(0));
     }
     @Override
