@@ -19,7 +19,7 @@ public class AimAtPose extends SubsystemBase {
     private Telemetry telemetry;
 
     private double tagID;
-    private double neededRPM;
+    public double neededRPM;
     private double distance;
 
     public AimAtPose(HardwareMap hwMap, Telemetry telemetry) {
@@ -40,6 +40,7 @@ public class AimAtPose extends SubsystemBase {
         llResult = LIMELIGHT.limelight.getLatestResult();
         distance = getDistanceFromTage(llResult.getTa());
         tagID = llResult.getFiducialResults().get(0).getFiducialId();
+        getRPM(this.distance);
         telemetry.addData("distance", distance);
         telemetry.addData("tag ID", tagID);
         telemetry.addData("RPM Needed", neededRPM);
