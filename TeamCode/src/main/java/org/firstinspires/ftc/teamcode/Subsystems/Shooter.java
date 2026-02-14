@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -37,24 +38,24 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-
-        telemetry.addData("masterRPM" , P);
-        telemetry.addData("slaveRPM" , P);
+        double P = pidf.calculate(
+                master.getCurrentPosition(),
+                slave.getCurrentPosition()
+        );
+        telemetry.addData("masterRPM" , master.getVelocity());
+        telemetry.addData("slaveRPM" , slave.getVelocity());
         telemetry.addData("target" , target);
     }
 
-    public Command power(double vel){
-        return new InstantCommand(() -> {
-            double P = pidf.calculate(
-                    master.getCurrentPosition(),
-                    slave.getCurrentPosition()
-            );
-            this.P = vel;
-            this.target = vel;
-            master.setPower(vel);
-            slave.setPower(vel);
-        }
-        );}
+    public void Power(double power){
+        this.P = power;
+        master.setVelocity(power);
+        slave.setVelocity(power);
+    }
+
+    public Command power(double vel) {
+        return new RunCommand(() -> Power(vel), this);
+    }
 }
 
 
