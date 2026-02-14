@@ -10,18 +10,15 @@ import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.extentions.AimAtPose;
 import org.firstinspires.ftc.teamcode.extentions.LimeLight;
 
 @TeleOp(name = "aimAtPose")
 public class AimAtPoseTeleop extends CommandOpMode {
     private AimAtPose aim;
+    private Shooter shooter;
 
-    private LimeLight LIMELIGHT;
-    private LLResult llResult;
-
-    private int tagID;
-    private double distance;
     public double RPM_Needed;
 
     private GamepadEx operator;
@@ -30,30 +27,10 @@ public class AimAtPoseTeleop extends CommandOpMode {
     @Override
     public void initialize() {
         aim = new AimAtPose(hardwareMap, telemetry);
+        shooter = new Shooter(hardwareMap, telemetry);
         operator = new GamepadEx(gamepad1);
-        LIMELIGHT = new LimeLight(hardwareMap, telemetry);
 
-        operator.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(aimAtPose());
-    }
-
-    @Override
-    public void run() {
-        super.run();
-        llResult = LIMELIGHT.limelight.getLatestResult();
-        distance = LIMELIGHT.getDistanceFromTage(llResult.getTa());
-        telemetry.addData("Distance", distance);
-        telemetry.addData("RPM needed", RPM_Needed);
-        telemetry.update();
-    }
-
-    public void calculateRPM() {
-        distance = LIMELIGHT.getDistanceFromTage(llResult.getTa());
-        RPM_Needed = aim.getRPM(distance);
-    }
-
-    public Command aimAtPose() {
-        return new InstantCommand(
-                this::calculateRPM
-        );
+        operator.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(shooter.power(aim.neededRPM));
+        operator.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(shooter.power(0));
     }
 }
