@@ -62,7 +62,8 @@ public class Shooter extends SubsystemBase {
 
 
     public Command power(double vel) {
-        return new RunCommand(() -> Power(vel), this);
+        return new RunCommand(() ->
+            Power(vel), this);
     }
 }
 
