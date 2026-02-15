@@ -40,7 +40,6 @@ public class AimAtPose extends SubsystemBase {
         llResult = LIMELIGHT.limelight.getLatestResult();
         distance = getDistanceFromTage(llResult.getTa());
         tagID = llResult.getFiducialResults().get(0).getFiducialId();
-        getRPM(this.distance);
         telemetry.addData("distance", distance);
         telemetry.addData("tag ID", tagID);
         telemetry.update();
