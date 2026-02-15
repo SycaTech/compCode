@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 @TeleOp(name = "intake")
 public class IntakeTeleOp extends  CommandOpMode {
 
-    private GamepadEx gamepadEx;
-    private Intake intake;
+    public GamepadEx gamepadEx;
+    public Intake intake;
 
     @Override
     public void initialize() {

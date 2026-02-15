@@ -13,9 +13,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 public class Intake extends SubsystemBase {
-    private Telemetry telemetry;
+    public Telemetry telemetry;
 
-    private DcMotorEx intake;
+    public DcMotorEx intake;
 
     public Intake(Telemetry telemetry, HardwareMap hwMap) {
         this.telemetry = telemetry;
@@ -39,7 +39,7 @@ public class Intake extends SubsystemBase {
 
     }
 
-    public Command Power(double VOLT) {
+    public Command setpower(double VOLT) {
         return new InstantCommand(() -> setPower(VOLT));
     }
 }
