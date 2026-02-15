@@ -14,7 +14,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Index extends SubsystemBase {
     private Motor indexer;
-    private HardwareMap hardwareMap;
     private Telemetry telemetry;
 
     private PIDController pController;
@@ -25,10 +24,8 @@ public class Index extends SubsystemBase {
     public Index(HardwareMap hMap, Telemetry telemetry) {
         pController = new PIDController(0.005, 0.0, 0.0001);
 
-        this.hardwareMap = hMap;
         this.telemetry = telemetry;
 
-        indexer = new Motor(this.hardwareMap, "index");
 
     }
 
