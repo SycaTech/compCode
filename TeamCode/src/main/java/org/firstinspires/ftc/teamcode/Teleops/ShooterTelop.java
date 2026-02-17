@@ -1,27 +1,26 @@
 package org.firstinspires.ftc.teamcode.Teleops;
-
 import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.bylazar.gamepad.Gamepad;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.teamcode.Subsystems.DrivetrainBase;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 
 @TeleOp(name = "shooter")
 public class ShooterTelop extends CommandOpMode {
-    public GamepadEx shoot;
-    public Shooter shooterr;
+    private GamepadEx shoot;
+    public Shooter shooter;
 
     @Override
     public void initialize() {
-        GamepadEx gamepadEx = new GamepadEx(gamepad1);
-        shooterr = new Shooter(hardwareMap);
-
+        shoot = new GamepadEx(gamepad1);
+        shooter = new Shooter(hardwareMap , telemetry);
+        shoot.getGamepadButton(GamepadKeys.Button.A).whenPressed(shooter.power(2350));
+        shoot.getGamepadButton(GamepadKeys.Button.B).whenPressed(shooter.power(0));
+    }
+    @Override
+    public void run(){
+        super.run();
+        telemetry.update();
     }
 }
 

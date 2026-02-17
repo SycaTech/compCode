@@ -11,12 +11,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 
-
 @TeleOp(name = "intake")
-public class IntakeTeleOp extends CommandOpMode {
+public class IntakeTeleOp extends  CommandOpMode {
 
-    private GamepadEx gamepadEx;
-    private Intake intake;
+    public GamepadEx gamepadEx;
+    public Intake intake;
 
     @Override
     public void initialize() {
@@ -24,11 +23,11 @@ public class IntakeTeleOp extends CommandOpMode {
         intake = new Intake(telemetry, hardwareMap);
 
 
-        gamepadEx.getGamepadButton(GamepadKeys.Button.A).whenPressed(intake.Power(0.7));
+        gamepadEx.getGamepadButton(GamepadKeys.Button.A).whenPressed(intake.Power(0.2));
 
         gamepadEx.getGamepadButton(GamepadKeys.Button.Y).whenPressed(intake.Power(0));
 
-        gamepadEx.getGamepadButton(GamepadKeys.Button.B).whenPressed(intake.Power(-0.7));
+        gamepadEx.getGamepadButton(GamepadKeys.Button.B).whenPressed(intake.Power(-0.2));
 
 
 
@@ -39,5 +38,4 @@ public class IntakeTeleOp extends CommandOpMode {
         super.run();
         telemetry.update();
     }
-
-}
+    }
