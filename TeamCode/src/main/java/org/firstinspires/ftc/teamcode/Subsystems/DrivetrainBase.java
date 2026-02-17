@@ -7,6 +7,8 @@ import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.rev.Rev9AxisImu;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -16,12 +18,13 @@ import org.firstinspires.ftc.teamcode.extentions.Constants;
 import java.util.function.DoubleSupplier;
 
 public class DrivetrainBase extends SubsystemBase {
-    private final Motor frontLeft;
     private final Motor frontRight;
     private final Motor backLeft;
+    private final Motor frontLeft;
     private final Motor backRight;
 
-    public HardwareMap hardwareMap;
+
+
 
     public Rev9AxisImu imu;
     public PIDController pid = new PIDController(Constants.Mecanum.kP, Constants.Mecanum.kI, Constants.Mecanum.kD);
@@ -31,12 +34,11 @@ public class DrivetrainBase extends SubsystemBase {
 
     public DrivetrainBase(HardwareMap hwMap, Telemetry telemetry) {
         this.telemetry = telemetry;
-        this.hardwareMap = hwMap;
 
-        frontLeft = new Motor(this.hardwareMap, Constants.Mecanum.frontLeftName);
-        frontRight = new Motor(this.hardwareMap, Constants.Mecanum.frontRightName);
-        backLeft= new Motor(this.hardwareMap, Constants.Mecanum.backLeftName);
-        backRight = new Motor(this.hardwareMap, Constants.Mecanum.backRightName);
+        frontLeft = new Motor(hwMap, Constants.Mecanum.frontLeftName);
+        frontRight = new Motor(hwMap, Constants.Mecanum.frontRightName);
+        backLeft= new Motor(hwMap, Constants.Mecanum.backLeftName);
+        backRight = new Motor(hwMap, Constants.Mecanum.backRightName);
 
         frontLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
@@ -52,7 +54,6 @@ public class DrivetrainBase extends SubsystemBase {
         backLeft.setInverted(true);
 
         imu = hwMap.get(Rev9AxisImu.class, Constants.Mecanum.imuName);
-        imu.resetYaw();
 
         mecanum = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
     }
@@ -78,21 +79,21 @@ public class DrivetrainBase extends SubsystemBase {
 
     @Override
     public void periodic() {
-        pid.calculate(
-                frontLeft.getCurrentPosition(), pid.getSetPoint()
-        );
-
-        pid.calculate(
-                frontRight.getCurrentPosition(), pid.getSetPoint()
-        );
-
-        pid.calculate(
-                backLeft.getCurrentPosition(), pid.getSetPoint()
-        );
-
-        pid.calculate(
-                backRight.getCurrentPosition(), pid.getSetPoint()
-        );
+//        pid.calculate(
+//                frontLeft.getCurrentPosition(), pid.getSetPoint()
+//        );
+//
+//        pid.calculate(
+//                frontRight.getCurrentPosition(), pid.getSetPoint()
+//        );
+//
+//        pid.calculate(
+//                backLeft.getCurrentPosition(), pid.getSetPoint()
+//        );
+//
+//        pid.calculate(
+//                backRight.getCurrentPosition(), pid.getSetPoint()
+//        );
 
         telemetry.addData("yaw", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
     }

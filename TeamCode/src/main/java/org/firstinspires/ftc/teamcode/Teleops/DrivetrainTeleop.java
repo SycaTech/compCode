@@ -20,8 +20,8 @@ DrivetrainTeleop extends CommandOpMode {
 
         drive.setDefaultCommand(
                 drive.FieldCentricMecanum(
-                    () -> driverController.getLeftY(),
                     () -> driverController.getLeftX(),
+                    () -> driverController.getLeftY(),
                     () -> driverController.getRightX())
         );
     }
